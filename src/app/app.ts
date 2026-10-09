@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Task } from './tasks/task';
 import { FormsModule } from '@angular/forms';
+import { TaskCard } from './tasks/task-card/task-card';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [FormsModule, TaskCard],
   styleUrl: './app.scss',
   templateUrl: './app.html',
   standalone: true,
@@ -43,10 +44,10 @@ export class App {
   }
 
   deleteTask(id: number) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    this.tasks = this.tasks.filter(task => task.id !== id);
   }
 
   getActiveTasksCount(): number {
-    return this.tasks.filter((task) => !task.completed).length;
+    return this.tasks.filter(task => !task.completed).length;
   }
 }

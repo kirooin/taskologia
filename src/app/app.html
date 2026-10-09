@@ -16,32 +16,12 @@
     <form class="tasks__form" (ngSubmit)="addTask()">
       <input type="text" class="tasks__input" name="taskTitle"
              placeholder="Введите новую задачу" [(ngModel)]="taskTitle">
-      <button class="tasks__button" >Добавить</button>
+      <button class="tasks__button">Добавить</button>
     </form>
 
     <div class="tasks__list">
       @for (task of tasks; track task.id) {
-        <div class="task" [class.task_completed]="task.completed" ]>
-          <button class="task__status" type="button" (click)="toggleTask(task)">
-            @if (task.completed) {
-              <img src="images/icons/tick.svg" alt="Tick">
-            }
-          </button>
-
-          <div class="task__content">
-            <p class="task__title">{{ task.title }}</p>
-            @if (task.completed) {
-              <span class="task__badge">Выполнено</span>
-            } @else {
-              <span class="task__badge task__badge_active">В работе</span>
-            }
-
-          </div>
-
-          <button class="task__delete" type="button" (click)="deleteTask(task.id)">
-            <img src="images/icons/cross.svg" alt="Cross">
-          </button>
-        </div>
+        <app-task-card [task]="task" (toggle)="toggleTask($event)" (delete)="deleteTask($event)"/>
       } @empty {
         <div class="tasks__empty">
           <p>Задач пока нет</p>
@@ -49,9 +29,6 @@
         </div>
       }
 
-
-
     </div>
-
   </section>
 </main>
