@@ -2,10 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Task } from './tasks/task';
 import { FormsModule } from '@angular/forms';
 import { TaskCard } from './tasks/task-card/task-card';
+import { TaskDetails } from './tasks/taks-details/task-details';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, TaskCard],
+  imports: [FormsModule, TaskCard, TaskDetails],
   styleUrl: './app.scss',
   templateUrl: './app.html',
   standalone: true,
@@ -14,14 +15,16 @@ export class App {
   @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
 
   taskTitle: string = '';
+  selectedTask: Task | null = null;
 
   tasks: Task[] = [
-    { id: 1, title: 'Изучить компоненты Angular', completed: true },
-    { id: 2, title: 'Разобраться с binding', completed: false },
+    { id: 1, title: 'Изучить компоненты Angular', completed: true, description: 'Разобраться с декораторами @Component, жизненным циклом, Input/Output и встроенным control flow (@if, @for)' },
+    { id: 2, title: 'Разобраться с binding', completed: false, description: '' },
     {
       id: 3,
       title: 'Сделать первый мини-проект на Angular с тремя компонентами и двумя пайпами',
       completed: false,
+      description: 'Собрать небольшое приложение: несколько компонентов, общий state на уровне родителя, кастомные пайпы для форматирования данных.'
     },
   ];
 
@@ -41,12 +44,16 @@ export class App {
       id: this.tasks.length ? this.tasks[this.tasks.length - 1].id + 1 : 1,
       title,
       completed: false,
+      description: ''
     });
 
     this.taskTitle = '';
   }
 
   deleteTask(id: number) {
+    if(this.selectedTask && this.selectedTask.id === id) {
+      this.selectedTask = null;
+    }
     this.tasks = this.tasks.filter(task => task.id !== id);
   }
 
@@ -54,8 +61,16 @@ export class App {
     return this.tasks.filter(task => !task.completed).length;
   }
 
-  clearTaskInput() {
+  clearTaskInput(): void {
       this.taskTitle = '';
       this.taskInput.nativeElement.focus();
+  }
+
+  closeDetails(): void {
+    this.selectedTask = null;
+  }
+
+  selectTask(task: Task) {
+    this.selectedTask = task;
   }
 }
