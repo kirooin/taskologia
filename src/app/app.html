@@ -35,6 +35,7 @@
           <app-task-card [task]="task" [isSelected]="selectedTask?.id === task.id"
                          (toggle)="toggleTask($event)" (delete)="deleteTask($event)" (select)="selectTask($event)"
           />
+
         } @empty {
           <div class="tasks__empty">
             <p>Задач пока нет</p>
