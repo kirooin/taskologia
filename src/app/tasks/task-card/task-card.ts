@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output, } from '@angular/core';
 import { Task } from '../task';
 
 @Component({
@@ -9,23 +9,23 @@ import { Task } from '../task';
   standalone: true,
 })
 export class TaskCard {
-  @Input({ required: true }) task!: Task;
-  @Input() isSelected = false;
-  @Output('toggle') toggled = new EventEmitter<Task>();
-  @Output('delete') deleted = new EventEmitter<number>();
-  @Output('select') selected = new EventEmitter<Task>();
+  task = input.required<Task>();
+  isSelected = input<boolean>(false);
+  toggled = output<Task>({ alias: 'toggle' });
+  deleted = output<number>({ alias: 'delete' });
+  selected = output<Task>({ alias: 'select' });
 
   toggle(event: Event): void {
     event.stopPropagation();
-    this.toggled.emit(this.task);
+    this.toggled.emit(this.task());
   }
 
   delete(event: Event): void {
     event.stopPropagation();
-    this.deleted.emit(this.task.id);
+    this.deleted.emit(this.task().id);
   }
 
   select(): void {
-    this.selected.emit(this.task);
+    this.selected.emit(this.task());
   }
 }

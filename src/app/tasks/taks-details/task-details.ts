@@ -2,11 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
+  input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   ViewChild,
 } from '@angular/core';
 import { Task } from '../task';
@@ -22,8 +21,8 @@ import { Task } from '../task';
   },
 })
 export class TaskDetails implements AfterViewInit, OnInit, OnDestroy {
-  @Input({ required: true }) task!: Task;
-  @Output('close') closed = new EventEmitter<void>();
+  task = input.required<Task>();
+  closed = output<void>({ alias: 'close' });
   @ViewChild('details') details!: ElementRef<HTMLElement>;
   private openingAnimation?: Animation;
   private translateAnimation = 'translateX';
