@@ -1,8 +1,10 @@
-import { Component, computed, effect, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, signal, ViewChild } from '@angular/core';
 import { Task } from './tasks/task';
 import { FormsModule } from '@angular/forms';
 import { TaskCard } from './tasks/task-card/task-card';
 import { TaskDetails } from './tasks/taks-details/task-details';
+import { TooltipDirective } from './shared/ui/tooltip';
+import { ShowIfValueDirective } from './shared/ui/show-if-value';
 
 type taskDraft = {
   title: string;
@@ -11,7 +13,7 @@ type taskDraft = {
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, TaskCard, TaskDetails],
+  imports: [FormsModule, TaskCard, TaskDetails, TooltipDirective, ShowIfValueDirective],
   styleUrl: './app.scss',
   templateUrl: './app.html',
   standalone: true,
@@ -44,14 +46,12 @@ export class App {
   ]);
 
   taskDescription = signal('');
-  activeTasksCount = computed(() =>
-    this.tasks().filter((task) => !task.completed).length
-  )
+  activeTasksCount = computed(() => this.tasks().filter((task) => !task.completed).length);
 
   constructor() {
     const savedDraft = localStorage.getItem(this.taskDraftStorageKey);
     if (savedDraft) {
-      const draft: taskDraft = JSON.parse(savedDraft)
+      const draft: taskDraft = JSON.parse(savedDraft);
       this.taskTitle.set(draft.title || '');
       this.taskDescription.set(draft.description || '');
     }
@@ -73,7 +73,7 @@ export class App {
     );
 
     if (this.selectedTask()?.id === taskToToggle.id) {
-      const updatedTask = this.tasks().find(task => task.id === taskToToggle.id) || null
+      const updatedTask = this.tasks().find((task) => task.id === taskToToggle.id) || null;
       this.selectedTask.set(updatedTask);
     }
   }
