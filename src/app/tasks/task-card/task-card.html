@@ -17,7 +17,9 @@
 
   </div>
 
-  <button class="task-card__delete" type="button" (click)="delete($event)" appTooltip="Удалить">
-    <img src="images/icons/cross.svg" alt="Cross">
-  </button>
+  @if(task().deadline) {
+    <div class="task-card__deadline" appTooltip="Дедлайн">
+      {{task().deadline | taskDeadline}}
+    </div>
+  }
 </div>

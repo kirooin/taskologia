@@ -9,7 +9,7 @@ import { ShowIfValueDirective } from './shared/ui/show-if-value';
 type taskDraft = {
   title: string;
   description: string;
-}
+};
 
 @Component({
   selector: 'app-root',
@@ -34,14 +34,28 @@ export class App {
       completed: true,
       description:
         'Разобраться с декораторами @Component, жизненным циклом, Input/Output и встроенным control flow (@if, @for)',
+      createdAt: '2026-10-20T10:32:14.000Z',
+      deadline: '2026-10-20T15:32:14.000Z',
+      priority: null,
     },
-    { id: 2, title: 'Разобраться с binding', completed: false, description: '' },
+    {
+      id: 2,
+      title: 'Разобраться с binding',
+      completed: false,
+      description: '',
+      createdAt: '2026-10-20T17:32:14.000Z',
+      deadline: '2026-10-21T11:30:14.000Z',
+      priority: 'medium',
+    },
     {
       id: 3,
       title: 'Сделать первый мини-проект на Angular с тремя компонентами и двумя пайпами',
       completed: false,
       description:
         'Собрать небольшое приложение: несколько компонентов, общий state на уровне родителя, кастомные пайпы для форматирования данных.',
+      createdAt: '2026-10-10T17:32:14.000Z',
+      deadline: '2026-10-27T11:30:14.000Z',
+      priority: 'high',
     },
   ]);
 
@@ -95,6 +109,9 @@ export class App {
       title,
       completed: false,
       description,
+      priority: null,
+      createdAt: new Date().toISOString(),
+      deadline: null,
     };
 
     this.tasks.update((currentTasks) => [...currentTasks, newTask]);
