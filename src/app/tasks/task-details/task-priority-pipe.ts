@@ -1,0 +1,29 @@
+import { Pipe, PipeTransform } from '@angular/core';
+import { TaskPriorityType } from '../task';
+
+@Pipe({
+  name: 'taskPriority',
+  standalone: true,
+})
+export class TaskPriorityPipe implements PipeTransform {
+  transform(priority: TaskPriorityType, withPrefix = true, prefix = 'Приоритет: '): string {
+    let priorityText: string;
+
+    switch (priority) {
+      case 'low':
+        priorityText = 'низкий';
+        break;
+      case 'medium':
+        priorityText = 'средний';
+        break;
+      case 'high':
+        priorityText = 'высокий';
+        break;
+      default:
+        return 'Без приоритета';
+    }
+    return withPrefix ? prefix + priorityText : priorityText;
+
+  }
+
+}

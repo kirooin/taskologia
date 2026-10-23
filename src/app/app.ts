@@ -2,7 +2,7 @@ import { Component, computed, effect, ElementRef, signal, ViewChild } from '@ang
 import { Task } from './tasks/task';
 import { FormsModule } from '@angular/forms';
 import { TaskCard } from './tasks/task-card/task-card';
-import { TaskDetails } from './tasks/taks-details/task-details';
+import { TaskDetails } from './tasks/task-details/task-details';
 import { TooltipDirective } from './shared/ui/tooltip';
 import { ShowIfValueDirective } from './shared/ui/show-if-value';
 
@@ -55,7 +55,7 @@ export class App {
         'Собрать небольшое приложение: несколько компонентов, общий state на уровне родителя, кастомные пайпы для форматирования данных.',
       createdAt: '2026-10-10T17:32:14.000Z',
       deadline: '2026-10-27T11:30:14.000Z',
-      priority: 'high',
+      priority: 'low',
     },
   ]);
 
