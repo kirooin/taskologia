@@ -36,7 +36,8 @@
         </div>
 
         <button class="tasks__button"
-                *appShowIfValue="taskTitle()">Добавить</button>
+                *appShowIfValue="taskTitle()">Добавить
+        </button>
       </form>
 
       <div class="tasks__list">
@@ -57,11 +58,8 @@
 
     </section>
     @if (selectedTask()) {
-      <app-task-details [task]="selectedTask()!" (close)="closeDetails()" (delete)="deleteTask($event)"></app-task-details>
+      <app-task-details [task]="selectedTask()!" (close)="selectTask(null)"
+                        (delete)="deleteTask($event)"></app-task-details>
     }
-
-
   </div>
-
-
 </main>
