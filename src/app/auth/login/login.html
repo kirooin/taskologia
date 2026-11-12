@@ -1,0 +1,49 @@
+<div class="login">
+  <form class="login__form" #authForm="ngForm" (ngSubmit)="login(authForm)">
+
+    <div class="login__header">
+      <img alt="Логотип" class="login__logo" src="images/logo.svg">
+      <p class="login__label">Taskologia</p>
+      <h2 class="login__title">Вход в аккаунт</h2>
+      <p class="login__description">Авторизуйтесь, чтобы работать с задачами</p>
+    </div>
+
+    <div class="login__field">
+      <input class="form-input login__input" id="email" name="email" required email #email="ngModel"
+             [(ngModel)]="loginForm.email" placeholder="Введите E-mail" type="email">
+
+      @if (email.invalid && (email.dirty || email.touched)) {
+        <div class="form-error">
+
+          @if (email.errors?.['required']) {
+            <span>Введите email</span>
+          }
+          @if (email.errors?.['email']) {
+            <span>Введите корректный email</span>
+          }
+
+        </div>
+      }
+    </div>
+
+    <div class="login__field">
+      <input class="form-input login__input" id="password" name="password" required minlength="6" #password="ngModel"
+             [(ngModel)]="loginForm.password" placeholder="Введите Пароль" type="password">
+      @if (password.invalid && (password.dirty || password.touched)) {
+        <div class="form-error">
+
+          @if (password.errors?.['required']) {
+            <span>Введите пароль</span>
+          }
+          @if (password.errors?.['minlength']) {
+            <span>Пароль должен содержать минимум 6 символов</span>
+          }
+
+        </div>
+      }
+
+    </div>
+
+    <button class="button login__button" [disabled]="authForm.invalid">Войти</button>
+  </form>
+</div>

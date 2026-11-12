@@ -17,11 +17,11 @@
 
       <form class="tasks__form" (ngSubmit)="addTask()">
         <div class="tasks__input-wrapper">
-          <input type="text" class="tasks__input" name="taskTitle" #taskInput
+          <input type="text" class="form-input tasks__input" name="taskTitle" #taskInput
                  placeholder="Введите новую задачу"
                  [ngModel]=taskTitle() (ngModelChange)="taskTitle.set($event)"
           >
-          <textarea class="tasks__textarea" name="taskDescription" placeholder="Добавьте описание задачи"
+          <textarea class="form-textarea tasks__textarea" name="taskDescription" placeholder="Добавьте описание задачи"
                     *appShowIfValue="taskTitle()"
                     [ngModel]="taskDescription()" (ngModelChange)="taskDescription.set($event)"
           ></textarea>
@@ -35,7 +35,7 @@
           }
         </div>
 
-        <button class="tasks__button"
+        <button class="button tasks__button"
                 *appShowIfValue="taskTitle()">Добавить
         </button>
       </form>
