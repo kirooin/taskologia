@@ -15,30 +15,7 @@
       </div>
 
 
-      <form class="tasks__form" (ngSubmit)="addTask()">
-        <div class="tasks__input-wrapper">
-          <input type="text" class="form-input tasks__input" name="taskTitle" #taskInput
-                 placeholder="Введите новую задачу"
-                 [ngModel]=taskTitle() (ngModelChange)="taskTitle.set($event)"
-          >
-          <textarea class="form-textarea tasks__textarea" name="taskDescription" placeholder="Добавьте описание задачи"
-                    *appShowIfValue="taskTitle()"
-                    [ngModel]="taskDescription()" (ngModelChange)="taskDescription.set($event)"
-          ></textarea>
-
-          @if (taskTitle()) {
-            <button class="tasks__clear" type="button" (click)="clearTaskInput()" appTooltip="Очистить"
-
-                    *appShowIfValue="taskTitle()">
-              <img src="images/icons/cross.svg" alt="Cross">
-            </button>
-          }
-        </div>
-
-        <button class="button tasks__button"
-                *appShowIfValue="taskTitle()">Добавить
-        </button>
-      </form>
+    <app-task-quick-form/>
 
       <div class="tasks__list">
         @for (task of tasks(); track task.id) {

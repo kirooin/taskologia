@@ -9,3 +9,8 @@ export type Task = {
   deadline: string | null;
   priority: TaskPriorityType;
 };
+
+export type TaskBaseModel = {
+  title: string;
+  description: string;
+};

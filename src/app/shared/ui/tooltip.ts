@@ -30,7 +30,7 @@ export class TooltipDirective implements OnDestroy {
   }
 
   hide() {
-    if (this.tooltipText()) {
+    if (this.tooltip) {
       this.renderer.removeChild(document.body, this.tooltip);
       this.tooltip = null;
     }

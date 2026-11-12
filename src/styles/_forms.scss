@@ -21,7 +21,8 @@
   }
 
   &.ng-invalid.ng-touched,
-  &.ng-invalid.ng-dirty, {
+  &.ng-invalid.ng-dirty,
+  &_invalid {
     border-color: #ef4444;
   }
 }

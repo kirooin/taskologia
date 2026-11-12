@@ -1,0 +1,26 @@
+<form class="task-quick-form" [formRoot]="taskForm">
+  <div class="task-quick-form__wrapper">
+    <input type="text" class="form-input task-quick-form__input" #taskInput
+
+           placeholder="Введите новую задачу" [formField]="taskForm.title"
+    >
+
+
+    <textarea class="form-textarea task-quick-form__textarea" placeholder="Добавьте описание задачи"
+              *appShowIfValue="taskModel().title"
+              [formField]="taskForm.description"
+    ></textarea>
+
+    @if (taskModel().title) {
+      <button class="task-quick-form__clear" type="button" (click)="clearTaskInput()" appTooltip="Очистить"
+
+              *appShowIfValue="taskModel().title">
+        <img src="images/icons/cross.svg" alt="Cross">
+      </button>
+    }
+  </div>
+
+  <button class="button task-quick-form__button"
+          *appShowIfValue="taskModel().title" [disabled]="taskForm().invalid()">Добавить
+  </button>
+</form>
