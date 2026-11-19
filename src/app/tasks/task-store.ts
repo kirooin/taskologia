@@ -1,10 +1,9 @@
 import { computed, effect, inject, Service, signal } from '@angular/core';
-import { Task } from './task';
+import { Task, TaskBaseModel } from './task';
 import { TaskRepository } from './task-repository';
 
 @Service()
 export class TaskStore {
-
   private readonly taskRepository = inject(TaskRepository);
   tasks = signal<Task[]>(this.taskRepository.getTasks());
 
@@ -13,15 +12,15 @@ export class TaskStore {
 
   constructor() {
     effect(() => {
-      this.taskRepository.saveTasks(this.tasks())
+      this.taskRepository.saveTasks(this.tasks());
     });
   }
 
   toggleTask(taskToToggle: Task) {
     this.tasks.update((tasks) =>
       tasks.map((task) =>
-        task.id === taskToToggle.id ? { ...task, completed: !task.completed } : task
-      )
+        task.id === taskToToggle.id ? { ...task, completed: !task.completed } : task,
+      ),
     );
 
     if (this.selectedTask()?.id === taskToToggle.id) {
@@ -37,9 +36,9 @@ export class TaskStore {
     this.tasks.update((tasks) => tasks.filter((task) => task.id !== id));
   }
 
-  addTask(title: string, description: string): boolean {
-    const trimmedTitle = title.trim();
-    const trimmedDescription = description.trim();
+  addTask(taskData: TaskBaseModel): boolean {
+    const trimmedTitle = taskData.title.trim();
+    const trimmedDescription = taskData.description.trim();
 
     if (!trimmedTitle) {
       return false;
@@ -50,18 +49,46 @@ export class TaskStore {
 
     const newTask: Task = {
       id: lastTask ? lastTask.id + 1 : 1,
-      title: trimmedTitle,
+      title: taskData.title,
       completed: false,
-      description: trimmedDescription,
-      priority: null,
+      description: taskData.description,
+      priority: taskData.priority,
       createdAt: new Date().toISOString(),
-      deadline: null
+      deadline: taskData.deadline,
     };
 
     this.tasks.update((currentTasks) => [...currentTasks, newTask]);
     return true;
   }
 
+  updateTask(id: number, taskData: TaskBaseModel): boolean {
+    const trimmedTitle = taskData.title.trim();
+    const trimmedDescription = taskData.description.trim();
+
+    if (!trimmedTitle) {
+      return false;
+    }
+
+    this.tasks.update((tasks) =>
+      tasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              title: trimmedTitle,
+              description: trimmedDescription,
+              priority: taskData.priority,
+              deadline: taskData.deadline,
+            }
+          : task,
+      ),
+    );
+    if (this.selectedTask()?.id === id) {
+      const updatedTask = this.tasks().find((task) => task.id === id) || null;
+      this.selectedTask.set(updatedTask);
+    }
+
+    return true;
+  }
 
   selectTask(task: Task | null): boolean {
     if (this.selectedTask()?.id === task?.id) {
@@ -71,6 +98,4 @@ export class TaskStore {
     this.selectedTask.set(task);
     return true;
   }
-
-
 }

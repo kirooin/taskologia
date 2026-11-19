@@ -15,12 +15,12 @@
       <button class="task-quick-form__clear" type="button" (click)="clearTaskInput()" appTooltip="Очистить"
 
               *appShowIfValue="taskModel().title">
-        <img src="images/icons/cross.svg" alt="Cross">
+        <img src="images/icons/cross.svg" alt="Закрыть">
       </button>
     }
   </div>
 
   <button class="button task-quick-form__button"
-          *appShowIfValue="taskModel().title" [disabled]="taskForm().invalid()">Добавить
+          *appShowIfValue="taskModel().title" [disabled]="taskForm().invalid() || taskForm().submitting()">Добавить
   </button>
 </form>

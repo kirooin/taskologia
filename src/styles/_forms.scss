@@ -9,6 +9,7 @@
   color: #f5f5f5;
   background: #191427;
   transition: border-color 0.2s, background 0.2s;
+  font-family: inherit;
 
   &::placeholder {
     color: #9187ae;
@@ -24,6 +25,11 @@
   &.ng-invalid.ng-dirty,
   &_invalid {
     border-color: #ef4444;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
   }
 }
 

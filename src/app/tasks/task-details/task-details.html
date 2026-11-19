@@ -19,16 +19,23 @@
         </button>
       </div>
       <button class="border-icon-button task-details__close" type="button" (click)="close()" appTooltip="Закрыть" >
-        <img src="images/icons/cross.svg" alt="Cross">
+        <img src="images/icons/cross.svg" alt="Закрыть">
       </button>
     </div>
     <h2 class="task-details__title">{{ task().title }}</h2>
     <p class="task-details__description">{{ task().description }}</p>
   </div>
   <div class="task-details__footer">
-    <div class="task-details__created">Создано: {{ task().createdAt | date: "dd MMMM 'в' HH:mm"}}</div>
-    <button class="transparent-icon-button task-details__delete" type="button" appTooltip="Удалить задачу" (click)="delete()">
-      <img src="images/icons/trash.svg" alt="Trash">
+
+      <div class="task-details__created">Создано: {{ task().createdAt | date: "dd MMMM 'в' HH:mm"}}</div>
+    <div class="task-details__actions">
+
+      <button class="transparent-icon-button task-details__edit" type="button" appTooltip="Редактировать задачу" (click)="edit()">
+        <img src="images/icons/pencil.svg" alt="Изменить">
+      </button> <button class="transparent-icon-button task-details__delete" type="button" appTooltip="Удалить задачу" (click)="delete()">
+      <img src="images/icons/trash.svg" alt="Удалить">
     </button>
+    </div>
+
   </div>
 </aside>

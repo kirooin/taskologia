@@ -11,7 +11,15 @@
             <h1 class="tasks__title">Трекер задач</h1>
           </div>
         </div>
-        <div class="tasks__counter">Активных: {{ activeTasksCount() }}</div>
+
+        <div class="tasks__info">
+          <div class="tasks__counter">Активных: {{ activeTasksCount() }}</div>
+          <button class="border-icon-button" type="button"
+              (click)="toggleTaskFullFormPopup(true)"
+                  appTooltip="Создать задачу">
+            <img src="images/icons/plus.svg" alt="Создать">
+          </button>
+        </div>
       </div>
 
 
@@ -36,7 +44,12 @@
     </section>
     @if (selectedTask()) {
       <app-task-details [task]="selectedTask()!" (close)="selectTask(null)"
-                        (delete)="deleteTask($event)"></app-task-details>
+                        (delete)="deleteTask($event)" (edit)="editTask($event)"></app-task-details>
     }
+
   </div>
+
+  @if(isTaskFullFormOpened()) {
+    <app-task-full-form [task]="editingTask()" (close)="toggleTaskFullFormPopup(false)"/>
+  }
 </main>

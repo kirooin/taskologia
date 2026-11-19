@@ -13,4 +13,6 @@ export type Task = {
 export type TaskBaseModel = {
   title: string;
   description: string;
+  deadline: string | null;
+  priority: TaskPriorityType;
 };

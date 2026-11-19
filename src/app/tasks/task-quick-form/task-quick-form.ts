@@ -22,6 +22,8 @@ export class TaskQuickForm {
   taskModel = signal<TaskBaseModel>({
     title: '',
     description: '',
+    priority: null,
+    deadline: null,
   });
 
   taskForm = form(
@@ -36,7 +38,7 @@ export class TaskQuickForm {
       submission: {
         action: async (field) => {
           const value = field().value();
-          const taskAdded = this.taskStore.addTask(value.title, value.description);
+          const taskAdded = this.taskStore.addTask(value);
 
           if (!taskAdded) {
             this.taskInput.nativeElement.focus();
@@ -45,6 +47,8 @@ export class TaskQuickForm {
           field().reset({
             title: '',
             description: '',
+            priority: null,
+            deadline: null,
           });
         },
       },
@@ -57,6 +61,8 @@ export class TaskQuickForm {
       this.taskModel.set({
         title: savedDraft.title || '',
         description: savedDraft.description || '',
+        priority: null,
+        deadline: null,
       });
     }
 
@@ -65,6 +71,8 @@ export class TaskQuickForm {
         const draft: TaskBaseModel = {
           title: this.taskModel().title,
           description: this.taskModel().description,
+          priority: null,
+          deadline: null,
         };
         this.localStorage.setItem(this.taskDraftStorageKey, draft);
       } else {
@@ -77,6 +85,8 @@ export class TaskQuickForm {
     this.taskForm().reset({
       title: '',
       description: '',
+      priority: null,
+      deadline: null,
     });
     this.taskInput.nativeElement.focus();
   }

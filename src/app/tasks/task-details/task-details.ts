@@ -29,6 +29,7 @@ export class TaskDetails implements AfterViewInit, OnInit, OnDestroy {
   task = input.required<Task>();
   closed = output<void>({ alias: 'close' });
   deleted = output<number>({ alias: 'delete' });
+  edited = output<Task>({ alias: 'edit' });
   @ViewChild('details') details!: ElementRef<HTMLElement>;
   private openingAnimation?: Animation;
   private translateAnimation = 'translateX';
@@ -87,6 +88,10 @@ export class TaskDetails implements AfterViewInit, OnInit, OnDestroy {
 
   delete(): void {
     this.deleted.emit(this.task().id);
+  }
+
+  edit() {
+    this.edited.emit(this.task())
   }
 
   highLightPanel(): void {

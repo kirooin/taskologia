@@ -1,0 +1,78 @@
+<div class="task-full-form" (click)="close()">
+  <form class="task-full-form__form" (click)="$event.stopPropagation()" [formRoot]="taskForm">
+
+    <div class="task-full-form__header">
+      <h2 class="task-full-form__title">{{ task() ? 'Редактирование' : 'Создание' }} задачи</h2>
+      <button class="border-icon-button task-full-form__close" type="button" (click)="close()">
+        <img src="images/icons/cross.svg" alt="Закрыть">
+      </button>
+    </div>
+
+    <div class="task-full-form__content">
+
+      <div class="task-full-form__field">
+        <label class="task-full-form__field-label" for="task-title">Название</label>
+        <input class="form-input task-full-form__input" id="task-title" placeholder="Введите название задачи"
+               [class.form-input_invalid]="taskForm.title().invalid() && taskForm.title().touched()"
+               type="text" [formField]="taskForm.title">
+
+        @if (taskForm.title().invalid() && taskForm.title().touched()) {
+          <div class="form-error">
+            @for (error of taskForm.title().errors(); track error) {
+              <span>{{ error.message }}</span>
+            }
+          </div>
+        }
+
+      </div>
+
+      <div class="task-full-form__field">
+        <label class="task-full-form__field-label" for="task-description">Описание</label>
+        <textarea class="form-textarea task-full-form__textarea" id="task-description"
+                  placeholder="Введите подробности задачи"
+                  [formField]="taskForm.description">></textarea>
+
+      </div>
+
+      <div class="task-full-form__row">
+
+        <div class="task-full-form__field">
+          <label class="task-full-form__field-label" for="task-deadline">Дедлайн</label>
+          <input class="form-input task-full-form__input" id="task-deadline" type="datetime-local"
+                 [formField]="taskForm.deadline">
+        </div>
+
+        <div class="task-full-form__field">
+          <label class="task-full-form__field-label">Приоритет</label>
+          <div class="task-full-form__priorities">
+            @for (priority of priorities; track priority.value) {
+              <button class="task-full-form__priority" type="button"
+                      [class.task-full-form__priority_active]="taskForm.priority().value() === priority.value"
+                      [ngClass]="'task-full-form__priority_' + (priority.value || 'none')"
+                      (click)="taskForm.priority().value.set(priority.value)"
+              >{{ priority.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+      </div>
+
+      @if(taskForm().errors().length > 0 ) {
+        <div class="form-error task-full-form__common-error">
+          @for (error of taskForm().errors(); track error) {
+            <span>{{ error.message }}</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="task-full-form__footer">
+      <button class="button button_transparent task-full-form__cancel" type="button" (click)="close()">Отмена</button>
+      <button class="button task-full-form__submit" type="submit"
+              [disabled]="taskForm().invalid() || taskForm().submitting()">{{ task() ? 'Редактировать' : 'Создать' }} задачу
+      </button>
+    </div>
+
+  </form>
+</div>
