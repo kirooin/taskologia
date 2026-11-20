@@ -1,5 +1,5 @@
 <div class="login">
-  <form class="login__form" [formGroup]="loginForm" (ngSubmit)="login()">
+  <form class="login__form" [formRoot]="loginForm">
 
     <div class="login__header">
       <img alt="Логотип" class="login__logo" src="images/logo.svg">
@@ -9,46 +9,31 @@
     </div>
 
     <div class="login__field">
-      <input class="form-input login__input" id="email" name="email" formControlName="email"
-             placeholder="Введите E-mail" type="email">
+      <input class="form-input login__input" id="email"
+             placeholder="Введите E-mail" type="email" [formField]="loginForm.email">
 
-      @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+      @if (loginForm.email().invalid() && loginForm.email().touched()) {
         <div class="form-error">
-
-          @if (emailControl.errors?.['required']) {
-            <span>Введите email</span>
+          @for (error of loginForm.email().errors(); track error) {
+            <span>{{ error.message }}</span>
           }
-          @if (emailControl.errors?.['email']) {
-            <span>Введите корректный email</span>
-          }
-
         </div>
       }
-
 
     </div>
 
     <div class="login__field">
-      <input class="form-input login__input" id="password" name="password" formControlName="password"
-             placeholder="Введите Пароль" type="password">
-      @if (passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+      <input class="form-input login__input" id="password"
+             placeholder="Введите Пароль" type="password" [formField]="loginForm.password">
+
+      @if (loginForm.password().invalid() && loginForm.password().touched()) {
         <div class="form-error">
-
-          @if (passwordControl.errors?.['required']) {
-            <span>Введите пароль</span>
+          @for (error of loginForm.password().errors(); track error) {
+            <span>{{ error.message }}</span>
           }
-          @if (passwordControl.errors?.['minlength']) {
-            <span>Пароль должен содержать минимум 6 символов</span>
-          }
-          @if (passwordControl.errors?.['passwordNameForbidden']) {
-            <span>Запрещено использовать testologia в пароле</span>
-          }
-
         </div>
       }
-
     </div>
-
-    <button class="button login__button" [disabled]="loginForm.invalid">Войти</button>
+    <button class="button login__button" [disabled]="loginForm().invalid()">Войти</button>
   </form>
 </div>

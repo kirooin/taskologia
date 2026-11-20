@@ -58,7 +58,7 @@
 
       </div>
 
-      @if(taskForm().errors().length > 0 ) {
+      @if (taskForm().errors().length > 0) {
         <div class="form-error task-full-form__common-error">
           @for (error of taskForm().errors(); track error) {
             <span>{{ error.message }}</span>
@@ -70,7 +70,8 @@
     <div class="task-full-form__footer">
       <button class="button button_transparent task-full-form__cancel" type="button" (click)="close()">Отмена</button>
       <button class="button task-full-form__submit" type="submit"
-              [disabled]="taskForm().invalid() || taskForm().submitting()">{{ task() ? 'Редактировать' : 'Создать' }} задачу
+              [disabled]="taskForm().invalid() || taskForm().submitting()">{{ task() ? 'Редактировать' : 'Создать' }}
+        задачу
       </button>
     </div>
 
